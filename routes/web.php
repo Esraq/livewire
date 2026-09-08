@@ -199,3 +199,386 @@ Route::get('Esraq Humayun',function()
 
 });
 
+Route::get('cse_department',function()
+
+{
+
+   return view('cse_dapartment');
+
+});
+
+Route::get('Khwaja Enayetpuri Sufism and Skill Development Institute',function()
+
+{
+
+   return view('sufism');
+
+});
+
+Route::get('iqac',function()
+
+{
+
+   return view('iqac');
+
+});
+
+
+Route::get('academic_calender',function()
+
+{
+
+   return view('academic_calender');
+
+});
+
+
+Route::get('academic_policy',function()
+
+{
+
+   return view('academic_policy');
+
+});
+
+
+Route::get('course_catalogue',function()
+
+{
+
+   return view('course_catalogue');
+
+});
+
+Route::get('admission_information',function()
+
+{
+
+   return view('admission_information');
+
+});
+
+Route::get('graduate',function()
+
+{
+
+   return view('graduate');
+
+});
+
+
+Route::get('admission_requirement',function()
+
+{
+
+   return view('admission_requirement');
+
+});
+
+
+Route::get('admission_faq',function()
+
+{
+
+   return view('admission_faq');
+
+});
+
+Route::get('admission_eligibility',function()
+
+{
+
+   return view('admission-eligibility');
+
+});
+
+
+
+Route::get('admission_process',function()
+
+{
+
+   return view('admission_process');
+
+});
+
+
+
+
+Route::get('admission_checklist',function()
+
+{
+
+   return view('admission-checklist');
+
+});
+
+
+
+Route::get('credit_transfer',function()
+
+{
+
+   return view('credit_transfer');
+
+});
+
+
+Route::get('payment-guideline',function()
+
+{
+
+   return view('payment-guideline');
+
+});
+
+
+Route::get('guideline-for-guardians',function()
+
+{
+
+   return view('guideline-for-guardians');
+
+});
+
+
+
+
+Route::get('tution_fees',function()
+
+{
+
+   return view('tution_fees');
+
+});
+
+
+Route::get('tuition-fee-waiver',function()
+
+{
+
+   return view('tuition-fee-waiver');
+
+});
+
+
+Route::get('research_division',function()
+
+{
+
+   return view('research_division');
+
+});
+
+
+Route::get('research_group',function()
+
+{
+
+   return view('research_group');
+
+});
+
+Route::get('research-project',function()
+
+{
+
+   return view('research-project');
+
+});
+
+
+
+Route::get('research_facilation',function()
+
+{
+
+   return view('research_facilation');
+
+});
+
+
+Route::get('scopus-journal',function()
+
+{
+
+   return view('scopus_journal');
+
+});
+
+Route::get('research-collaboration',function()
+
+{
+
+   return view('research-collaboration');
+
+});
+
+
+
+
+Route::get('source-of-funding',function()
+
+{
+
+   return view('source-of-funding');
+
+});
+
+
+
+Route::get('research-lab',function()
+
+{
+
+   return view('research-lab');
+
+});
+
+Route::get('cafeteria',function()
+
+{
+
+   return view('cafeteria');
+
+});
+
+Route::get('library',function()
+
+{
+
+   return view('library');
+
+});
+
+
+Route::get('transport',function()
+
+{
+
+   return view('transport');
+
+});
+
+
+
+
+Route::get('medical_center',function()
+
+{
+
+   return view('medical_center');
+
+});
+
+
+Route::get('prayer_room',function()
+
+{
+
+   return view('prayer_room');
+
+});
+
+
+Route::get('culture',function()
+
+{
+
+   return view('culture');
+
+});
+
+Route::get('sports',function()
+
+{
+
+   return view('sports');
+
+});
+
+Route::get('career',function()
+
+{
+
+   return view('career');
+
+});
+
+
+Route::get('news-events',function()
+
+{
+
+   return view('news-events');
+
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

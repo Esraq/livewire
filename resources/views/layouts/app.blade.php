@@ -7,6 +7,18 @@
   <title>Khwaja Yunus Ali University</title>
   <link rel="icon" type="image/png" href="assets/images/logo.png">
   <link rel="stylesheet" href="css/style.css">
+
+
+
+
+
+
+
+
+
+
+
+  
 </head>
 <body>
   <a class="skip-link" href="#main-content">Skip to content</a>

@@ -94,6 +94,65 @@
 }
 
 
+.catalogue-list{
+
+    list-style:none;
+    padding:0;
+
+}
+
+
+.catalogue-list li{
+
+    border-bottom:1px solid #eee;
+    padding:12px 0;
+
+}
+
+
+.catalogue-list li:last-child{
+
+    border-bottom:none;
+
+}
+
+
+.catalogue-list a{
+
+    color:#e8552e;
+    text-decoration:none;
+    font-weight:600;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+
+}
+
+
+.catalogue-list a:hover{
+
+    text-decoration:underline;
+
+}
+
+
+.catalogue-list a::after{
+
+    content:"↓";
+    font-weight:400;
+    color:#999;
+
+}
+
+
+.catalogue-list li:last-child a::after{
+
+    content:"→";
+
+}
+
+
 
 
 
@@ -176,7 +235,7 @@
 .department-grid{
 
     display:grid;
-    grid-template-columns:repeat(3,1fr);
+    grid-template-columns:repeat(4,1fr);
     gap:20px;
     margin-top:30px;
 
@@ -224,6 +283,55 @@
 
 
 
+/* Faculty List */
+
+.faculty-link-grid{
+
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:20px;
+
+}
+
+
+.faculty-link-card{
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    border:1px solid #e2e2e2;
+    border-radius:8px;
+    padding:18px 20px;
+    color:#222;
+    font-weight:600;
+    text-decoration:none;
+    background:#fff;
+    transition:.3s;
+
+}
+
+
+.faculty-link-card::after{
+
+    content:"→";
+    color:#e8552e;
+
+}
+
+
+.faculty-link-card:hover{
+
+    border-color:#e8552e;
+    color:#e8552e;
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+
+}
+
+
+
+
+
 
 /* Responsive */
 
@@ -238,6 +346,13 @@
 
 
 .department-grid{
+
+    grid-template-columns:repeat(2,1fr);
+
+}
+
+
+.faculty-link-grid{
 
     grid-template-columns:repeat(2,1fr);
 
@@ -259,6 +374,13 @@
 
 
 .department-grid{
+
+    grid-template-columns:1fr;
+
+}
+
+
+.faculty-link-grid{
 
     grid-template-columns:1fr;
 
@@ -295,7 +417,7 @@
 
 <h1 class="page-title">
 
-Faculty of Science & Technology
+School of Science & Engineering
 
 </h1>
 
@@ -399,7 +521,7 @@ Message From Faculty Leadership
 <div class="profile-card">
 
 
-<img src="{{asset('assets/images/dean.jpg')}}"
+<img src="{{asset('assets/images/shahed.png')}}"
 alt="Dean">
 
 
@@ -438,7 +560,7 @@ for future opportunities.
 
 <h2 class="page-title" style="margin-top:60px;">
 
-Departments|Faculty List
+Departments
 
 </h2>
 
@@ -459,7 +581,9 @@ Departments|Faculty List
 <div class="department">
 
 <h4>
+    <a href="cse_department">
 Computer Science & Engineering
+ </a>
 </h4>
 
 
@@ -504,7 +628,7 @@ communication and modern technology.
 <div class="department">
 
 <h4>
-Mathematics & Physical Sciences
+Mechatronics Engineering
 </h4>
 
 
@@ -523,6 +647,22 @@ and analytical disciplines.
 
 
 
+<div class="department">
+
+<h4>
+Information & Communication Technology
+</h4>
+
+
+<p>
+
+Preparing students in networking, information
+systems and communication technologies for
+real-world industry applications.
+
+</p>
+
+
 </div>
 
 
@@ -530,45 +670,99 @@ and analytical disciplines.
 
 
 
+</div>
 
 
 
-<!-- Academic Programs -->
+<!-- Department Wise Faculty List -->
+
+
+<h2 class="page-title" style="margin-top:60px;">
+
+Department Wise Faculty List
+
+</h2>
+
+
+
+<div class="orange-line"></div>
+
+
+
+
+<div class="faculty-link-grid">
+
+
+<a href="/cse_faculty" class="faculty-link-card">
+Computer Science & Engineering
+</a>
+
+
+<a href="#" class="faculty-link-card">
+Electrical & Electronic Engineering
+</a>
+
+
+<a href="#" class="faculty-link-card">
+Mechatronics Engineering
+</a>
+
+
+<a href="#" class="faculty-link-card">
+Information & Communication Technology
+</a>
+
+
+</div>
+
+
+
+<!-- Course Catalogue -->
 
 
 <div class="info-card" style="margin-top:40px;">
 
 
 <h3>
-Academic Programs
+Course Catalogue
 </h3>
 
 
 
-<ul>
+<ul class="catalogue-list">
 
 <li>
-Undergraduate Programs
+<a href="{{asset('assets/catalogues/cse-course-catalogue.pdf')}}" download>
+Computer Science & Engineering — Download Catalogue (PDF)
+</a>
 </li>
 
 
 <li>
-Graduate Programs
+<a href="{{asset('assets/catalogues/eee-course-catalogue.pdf')}}" download>
+Electrical & Electronic Engineering — Download Catalogue (PDF)
+</a>
 </li>
 
 
 <li>
-Research Opportunities
+<a href="{{asset('assets/catalogues/mechatronics-course-catalogue.pdf')}}" download>
+Mechatronics Engineering — Download Catalogue (PDF)
+</a>
 </li>
 
 
 <li>
-Course Catalog
+<a href="{{asset('assets/catalogues/ict-course-catalogue.pdf')}}" download>
+Information & Communication Technology — Download Catalogue (PDF)
+</a>
 </li>
 
 
 <li>
-Student Resources
+<a href="#">
+View Faculty List
+</a>
 </li>
 
 
