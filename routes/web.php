@@ -5,6 +5,18 @@ use App\Http\Controllers\HomeController;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ResultController;
+
+use App\Http\Controllers\TrainingController;
+
+use App\Http\Controllers\TeachingController;
+
+use App\Http\Controllers\PublicationController;
+
+use App\Http\Controllers\ResearchController;
+
+use App\Http\Controllers\AwardController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -536,3 +548,15 @@ Route::post('/admin/logout', function () {
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('admin/home', [HomeController::class, 'adminHome'])->name('admin.home')->middleware('is_admin');
+
+Route::resource('results', ResultController::class);
+
+Route::resource('trainings', TrainingController::class)->except(['show', 'create']);
+
+Route::resource('subjects', TeachingController::class)->except(['show', 'create']);
+
+Route::resource('researches', ResearchController::class)->except(['show', 'create']);
+
+Route::resource('publications', PublicationController::class)->except(['show', 'create']);
+
+Route::resource('awards', AwardController::class)->except(['show', 'create']);
