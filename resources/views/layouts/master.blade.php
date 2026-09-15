@@ -484,7 +484,7 @@
 
         <!-- DASHBOARD -->
 
-        <li class="nav-item active">
+        <li class="nav-item {{ request()->routeIs('admin.home') ? 'active' : '' }}">
 
             <a class="nav-link"
                href="{{ route('admin.home') }}">
@@ -510,64 +510,128 @@
         </div>
 
 
-        <!-- STUDENTS -->
+        <!-- ACADEMIC QUALIFICATION -->
 
-        <li class="nav-item">
+        <li class="nav-item {{ request()->routeIs('results.*') ? 'active' : '' }}">
 
             <a class="nav-link"
-               href="#">
+               href="{{ route('results.index') }}">
 
-                <i class="fas fa-users"></i>
+                <i class="fas fa-graduation-cap"></i>
 
-                <span>Students</span>
+                <span>Academic Qualification</span>
 
             </a>
 
         </li>
 
 
-        <!-- TEACHERS -->
+        <!-- TRAINING EXPERIENCE -->
 
-        <li class="nav-item">
+        <li class="nav-item {{ request()->routeIs('trainings.*') ? 'active' : '' }}">
 
             <a class="nav-link"
-               href="#">
+               href="{{ route('trainings.index') }}">
 
                 <i class="fas fa-chalkboard-teacher"></i>
 
-                <span>Teachers</span>
+                <span>Training Experience</span>
 
             </a>
 
         </li>
 
 
-        <!-- COURSES -->
+        <!-- TEACHING -->
 
-        <li class="nav-item">
+        <li class="nav-item {{ request()->routeIs('subjects.*') ? 'active' : '' }}">
 
             <a class="nav-link"
-               href="#">
+               href="{{ route('subjects.index') }}">
 
                 <i class="fas fa-book"></i>
 
-                <span>Courses</span>
+                <span>Teaching</span>
 
             </a>
 
         </li>
 
 
-        <!-- DEPARTMENTS -->
+        <!-- RESEARCH INTEREST -->
 
-        <li class="nav-item">
+        <li class="nav-item {{ request()->routeIs('researches.*') ? 'active' : '' }}">
 
             <a class="nav-link"
-               href="#">
+               href="{{ route('researches.index') }}">
 
-                <i class="fas fa-building"></i>
+                <i class="fas fa-flask"></i>
 
-                <span>Departments</span>
+                <span>Research Interest</span>
+
+            </a>
+
+        </li>
+
+
+        <!-- PUBLICATIONS -->
+
+        <li class="nav-item {{ request()->routeIs('publications.*') ? 'active' : '' }}">
+
+            <a class="nav-link"
+               href="{{ route('publications.index') }}">
+
+                <i class="fas fa-file-alt"></i>
+
+                <span>Publications</span>
+
+            </a>
+
+        </li>
+
+
+        <!-- AWARD & SCHOLARSHIP -->
+
+        <li class="nav-item {{ request()->routeIs('awards.*') ? 'active' : '' }}">
+
+            <a class="nav-link"
+               href="{{ route('awards.index') }}">
+
+                <i class="fas fa-trophy"></i>
+
+                <span>Award &amp; Scholarship</span>
+
+            </a>
+
+        </li>
+
+
+        <!-- MEMBERSHIP -->
+
+        <li class="nav-item {{ request()->routeIs('members.*') ? 'active' : '' }}">
+
+            <a class="nav-link"
+               href="{{ route('members.index') }}">
+
+                <i class="fas fa-id-card"></i>
+
+                <span>Membership</span>
+
+            </a>
+
+        </li>
+
+
+        <!-- PREVIOUS EMPLOYMENT -->
+
+        <li class="nav-item {{ request()->routeIs('experiences.*') ? 'active' : '' }}">
+
+            <a class="nav-link"
+               href="{{ route('experiences.index') }}">
+
+                <i class="fas fa-briefcase"></i>
+
+                <span>Previous Employment</span>
 
             </a>
 

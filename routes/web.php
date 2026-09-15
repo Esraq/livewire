@@ -2,11 +2,11 @@
 
 
 use App\Http\Controllers\HomeController;
-
+use App\Http\Controllers\ExperienceController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ResultController;
-
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TrainingController;
 
 use App\Http\Controllers\TeachingController;
@@ -16,6 +16,8 @@ use App\Http\Controllers\PublicationController;
 use App\Http\Controllers\ResearchController;
 
 use App\Http\Controllers\AwardController;
+
+use App\Http\Controllers\MemberController;
 
 
 /*
@@ -549,7 +551,16 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::get('admin/home', [HomeController::class, 'adminHome'])->name('admin.home')->middleware('is_admin');
 
-Route::resource('results', ResultController::class);
+
+
+
+
+Route::middleware('auth')->group(function () {
+ 
+   Route::resource('results', ResultController::class);
+
+
+   Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::resource('trainings', TrainingController::class)->except(['show', 'create']);
 
@@ -560,3 +571,15 @@ Route::resource('researches', ResearchController::class)->except(['show', 'creat
 Route::resource('publications', PublicationController::class)->except(['show', 'create']);
 
 Route::resource('awards', AwardController::class)->except(['show', 'create']);
+
+Route::resource('members', MemberController::class);
+
+Route::resource('experiences', ExperienceController::class);
+
+Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
+ 
+});
+ 
+
+
+
