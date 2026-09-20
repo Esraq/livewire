@@ -1,6 +1,8 @@
 <?php
 
 
+use App\Http\Controllers\NewsEventController;
+
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ExperienceController;
 use Illuminate\Support\Facades\Auth;
@@ -8,17 +10,19 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ResultController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TrainingController;
-
+use App\Http\Controllers\AlumniController;
 use App\Http\Controllers\TeachingController;
-
+use App\Http\Controllers\BannerController;
 use App\Http\Controllers\PublicationController;
-
+use App\Http\Controllers\BotController;
+use App\Http\Controllers\SyndicateController;
 use App\Http\Controllers\ResearchController;
 
 use App\Http\Controllers\AwardController;
-
+use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\MemberController;
 
+use App\Http\Controllers\ConvocationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -581,5 +585,36 @@ Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show')
 });
  
 
+Route::resource('banners', BannerController::class)
+    ->only(['index', 'store', 'update', 'destroy']);
+
+Route::resource('notices', NoticeController::class)
+    ->only(['index', 'store', 'update', 'destroy']);
+ 
 
 
+
+// routes/web.php  (inside your admin auth middleware group)
+
+
+
+// parameters() keeps the route parameter named {alumni}, so model binding
+// works with the controller's "Alumni $alumni" argument.
+Route::resource('alumni', AlumniController::class)
+    ->only(['index', 'store', 'update', 'destroy'])
+    ->parameters(['alumni' => 'alumni']);
+
+    Route::resource('convocations', ConvocationController::class)
+    ->except(['create', 'show', 'edit']);
+ 
+    Route::resource('news-events', NewsEventController::class)
+    ->parameters(['news-events' => 'newsEvent'])
+    ->except(['create', 'show', 'edit']);
+
+
+    Route::resource('bots', BotController::class)
+    ->except(['create', 'show', 'edit']);
+
+
+ Route::resource('syndicates', SyndicateController::class)
+    ->except(['create', 'show', 'edit']);   

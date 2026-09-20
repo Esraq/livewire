@@ -787,7 +787,7 @@
                             <!-- PROFILE -->
 
                             <a class="dropdown-item"
-                               href="#">
+                               href="/profile">
 
                                 <i class="fas fa-user fa-sm fa-fw
                                           mr-2 text-gray-400"></i>
