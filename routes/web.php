@@ -17,13 +17,14 @@ use App\Http\Controllers\PublicationController;
 use App\Http\Controllers\BotController;
 use App\Http\Controllers\SyndicateController;
 use App\Http\Controllers\ResearchController;
-
+use App\Http\Controllers\AcademicCouncilController;
 use App\Http\Controllers\AwardController;
 use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\MemberController;
-
+use App\Http\Controllers\ChangePasswordController;
 use App\Http\Controllers\ConvocationController;
-
+use App\Http\Middleware\IsAdmin;
+use App\Http\Controllers\UserController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -553,7 +554,7 @@ Route::post('/admin/logout', function () {
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('admin/home', [HomeController::class, 'adminHome'])->name('admin.home')->middleware('is_admin');
+
 
 
 
@@ -581,11 +582,23 @@ Route::resource('members', MemberController::class);
 Route::resource('experiences', ExperienceController::class);
 
 Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
+
+Route::post('/profile/image', [ProfileController::class, 'updateImage'])->name('profile.image');
  
 });
  
 
-Route::resource('banners', BannerController::class)
+
+
+
+
+
+    Route::middleware(['auth', IsAdmin::class])->group(function () {
+    
+   Route::get('admin/home', [HomeController::class, 'adminHome'])->name('admin.home')->middleware('is_admin');
+
+
+   Route::resource('banners', BannerController::class)
     ->only(['index', 'store', 'update', 'destroy']);
 
 Route::resource('notices', NoticeController::class)
@@ -618,3 +631,31 @@ Route::resource('alumni', AlumniController::class)
 
  Route::resource('syndicates', SyndicateController::class)
     ->except(['create', 'show', 'edit']);   
+
+
+    Route::resource('academic-councils', AcademicCouncilController::class)
+    ->parameters(['academic-councils' => 'academicCouncil'])
+    ->except(['create', 'show', 'edit']);
+ 
+
+    Route::get('change-password', [ChangePasswordController::class, 'edit'])
+    ->name('change-password.edit');
+ 
+Route::put('change-password', [ChangePasswordController::class, 'update'])
+    ->name('change-password.update');
+ 
+    Route::resource('users', UserController::class)
+    ->except(['create', 'show', 'edit']);
+
+
+
+
+
+
+
+
+
+
+
+
+});

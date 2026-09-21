@@ -111,18 +111,19 @@
             ['label' => 'Notice',           'icon' => 'fas fa-bullhorn',         'route' => 'notices.index',          'active' => 'notices.*'],
             ['label' => 'Alumni',           'icon' => 'fas fa-user-graduate',    'route' => 'alumni.index',           'active' => 'alumni.*'],
             ['label' => 'Convocation',      'icon' => 'fas fa-scroll',           'route' => 'convocations.index',     'active' => 'convocations.*'],
-            ['label' => 'News & Events',    'icon' => 'fas fa-newspaper',        'route' => 'news.index',             'active' => 'news.*'],
+            ['label' => 'News & Events',    'icon' => 'fas fa-newspaper',        'route' => 'news-events.index',      'active' => 'news-events.*'],
         ],
         'Administration' => [
-            ['label' => 'Board of Trustees','icon' => 'fas fa-users-cog',        'route' => 'trustees.index',         'active' => 'trustees.*'],
+            ['label' => 'Board of Trustees','icon' => 'fas fa-users-cog',        'route' => 'bots.index',             'active' => 'bots.*'],
             ['label' => 'Syndicate',        'icon' => 'fas fa-gavel',            'route' => 'syndicates.index',       'active' => 'syndicates.*'],
             ['label' => 'Academic Council', 'icon' => 'fas fa-university',       'route' => 'academic-councils.index','active' => 'academic-councils.*'],
-            
         ],
         'System' => [
-            ['label' => 'Create User',      'icon' => 'fas fa-user-plus',        'route' => 'users.create',           'active' => 'users.*'],
+            ['label' => 'Users',            'icon' => 'fas fa-user-plus',        'route' => 'users.index',            'active' => 'users.*'],
         ],
     ];
+
+    $authUser = Auth::user();
 @endphp
 
 <div id="wrapper">
@@ -211,11 +212,22 @@
                     <!-- USER -->
                     <li class="nav-item dropdown no-arrow">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
-                            <img class="img-profile rounded-circle"
-                                 src="{{ asset('admin/img/boy.png') }}"
-                                 style="max-width:60px" alt="Profile">
+
+                            {{-- Dynamic avatar: uploaded photo, or first letter of the name --}}
+                            @if ($authUser->image)
+                                <img class="img-profile rounded-circle"
+                                     src="{{ asset($authUser->image) }}"
+                                     style="width:40px;height:40px;object-fit:cover;"
+                                     alt="{{ $authUser->name }}">
+                            @else
+                                <span class="img-profile rounded-circle d-inline-flex align-items-center justify-content-center bg-white font-weight-bold"
+                                      style="width:40px;height:40px;color:var(--university-green);">
+                                    {{ strtoupper(mb_substr($authUser->name ?? 'A', 0, 1)) }}
+                                </span>
+                            @endif
+
                             <span class="ml-2 d-none d-lg-inline text-white small">
-                                {{ Auth::user()->name ?? 'Administrator' }}
+                                {{ $authUser->name ?? 'Administrator' }}
                             </span>
                         </a>
 
@@ -224,6 +236,11 @@
                             <a class="dropdown-item" href="/profile">
                                 <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                 Profile
+                            </a>
+
+                            <a class="dropdown-item" href="{{ route('change-password.edit') }}">
+                                <i class="fas fa-key fa-sm fa-fw mr-2 text-gray-400"></i>
+                                Change Password
                             </a>
 
                             <div class="dropdown-divider"></div>

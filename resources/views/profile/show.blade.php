@@ -5,13 +5,33 @@
 @section('content')
 <div class="container-fluid">
 
+    {{-- Flash / error messages --}}
+    @if (session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+        </div>
+    @endif
+
+    @error('image')
+        <div class="alert alert-danger">{{ $message }}</div>
+    @enderror
+
     <div class="card shadow-sm">
 
-        {{-- Header: Name + Designation --}}
-        <div class="card-header bg-white d-flex align-items-baseline"
+        {{-- Header: Image + Name + Position --}}
+        <div class="card-header bg-white d-flex align-items-center"
              style="border-bottom: 2px solid var(--university-green);">
-            <h4 class="mb-0 mr-2">{{ $user->name ?? 'Not set' }}</h4>
-            <span class="text-muted">{{ $user->designation ?? '' }}</span>
+
+            <img src="{{ $user->image ? asset($user->image) : asset('admin/img/boy.png') }}"
+                 alt="{{ $user->name }}"
+                 class="rounded-circle mr-3"
+                 style="width:64px;height:64px;object-fit:cover;">
+
+            <div>
+                <h4 class="mb-0">{{ $user->name ?? 'Not set' }}</h4>
+                <span class="text-muted">{{ $user->position ?? '' }}</span>
+            </div>
         </div>
 
         <div class="card-body p-0">
@@ -22,26 +42,12 @@
                         <td>{{ $user->name ?? '-' }}</td>
                     </tr>
                     <tr>
-                        <td class="text-right font-weight-bold" style="border-right: 1px solid #d5e6da;">Designation</td>
-                        <td>{{ $user->designation ?? '-' }}</td>
+                        <td class="text-right font-weight-bold" style="border-right: 1px solid #d5e6da;">Position</td>
+                        <td>{{ $user->position ?: '-' }}</td>
                     </tr>
                     <tr style="background-color: var(--university-light-green);">
                         <td class="text-right font-weight-bold" style="border-right: 1px solid #d5e6da;">Department</td>
-                        <td>{{ $user->department ?? '-' }}</td>
-                    </tr>
-                    <tr>
-                        <td class="text-right font-weight-bold" style="border-right: 1px solid #d5e6da;">Faculty</td>
-                        <td>{{ $user->faculty ?? '-' }}</td>
-                    </tr>
-                    <tr style="background-color: var(--university-light-green);">
-                        <td class="text-right font-weight-bold" style="border-right: 1px solid #d5e6da;">Personal Webpage</td>
-                        <td>
-                            @if (!empty($user->personal_webpage))
-                                <a href="{{ $user->personal_webpage }}" target="_blank" rel="noopener">{{ $user->personal_webpage }}</a>
-                            @else
-                                -
-                            @endif
-                        </td>
+                        <td>{{ $user->department->name ?? '-' }}</td>
                     </tr>
                     <tr>
                         <td class="text-right font-weight-bold" style="border-right: 1px solid #d5e6da;">E-mail</td>
@@ -54,12 +60,14 @@
                         </td>
                     </tr>
                     <tr style="background-color: var(--university-light-green);">
-                        <td class="text-right font-weight-bold" style="border-right: 1px solid #d5e6da;">Phone</td>
-                        <td>{{ $user->phone ?? '-' }}</td>
-                    </tr>
-                    <tr>
-                        <td class="text-right font-weight-bold" style="border-right: 1px solid #d5e6da;">Cell-Phone</td>
-                        <td>{{ $user->cell_phone ?? '-' }}</td>
+                        <td class="text-right font-weight-bold" style="border-right: 1px solid #d5e6da;">Mobile No</td>
+                        <td>
+                            @if (!empty($user->mobile_no))
+                                <a href="tel:{{ preg_replace('/[^0-9+]/', '', $user->mobile_no) }}">{{ $user->mobile_no }}</a>
+                            @else
+                                -
+                            @endif
+                        </td>
                     </tr>
                 </tbody>
             </table>

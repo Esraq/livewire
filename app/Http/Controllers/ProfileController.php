@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 
+use Illuminate\Support\Facades\Auth;
+
+
+
 class ProfileController extends Controller
 {
     /**
@@ -12,10 +16,11 @@ class ProfileController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show()
+     public function show()
     {
-        $user = User::findOrFail(2);
+        $user = Auth::user()->load('department');
 
         return view('profile.show', compact('user'));
     }
+
 }

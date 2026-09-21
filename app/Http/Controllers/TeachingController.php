@@ -2,113 +2,95 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 use App\Models\Teaching;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TeachingController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * Rules shared by store() and update().
+     */
+    private function rules(): array
+    {
+        return [
+            'serial_no'    => 'required|integer',
+            'subject_name' => 'required|string|max:255',
+        ];
+    }
+
+    /**
+     * Query limited to the logged-in user's subjects (faculty_id = users.id).
+     */
+    private function ownSubjects()
+    {
+        return Teaching::where('faculty_id', Auth::id());
+    }
+
+    /**
+     * Display only the logged-in user's subjects.
      */
     public function index()
     {
-        $subjects = Teaching::latest()->paginate(5);
+        $subjects = $this->ownSubjects()->latest()->paginate(5);
 
         return view('faculty.subject', compact('subjects'))
                     ->with('i', (request()->input('page', 1) - 1) * 5)
                     ->with('editSubject', null);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         return view('faculty.subject');
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * Store a subject for the logged-in user.
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'serial_no'    => 'required|integer',
-            'subject_name' => 'required|string|max:255',
-        ]);
+        $validated = $request->validate($this->rules());
 
-        Teaching::create($validated);
+        $subject = new Teaching($validated);
+        // faculty_id is the logged-in user's id, never taken from the form
+        $subject->faculty_id = Auth::id();
+        $subject->save();
 
         return redirect()->route('subjects.index')
                         ->with('success', 'Subject added successfully.');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
-        $subject = Teaching::findOrFail($id);
+        $subject = $this->ownSubjects()->findOrFail($id);
 
         return view('faculty.show', compact('subject'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
-        $editSubject = Teaching::findOrFail($id);
-        $subjects = Teaching::latest()->paginate(5);
+        // 404 if the record belongs to someone else
+        $editSubject = $this->ownSubjects()->findOrFail($id);
+        $subjects    = $this->ownSubjects()->latest()->paginate(5);
 
         return view('faculty.subject', compact('subjects', 'editSubject'))
                     ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
-        $validated = $request->validate([
-            'serial_no'    => 'required|integer',
-            'subject_name' => 'required|string|max:255',
-        ]);
+        $validated = $request->validate($this->rules());
 
-        $subject = Teaching::findOrFail($id);
+        $subject = $this->ownSubjects()->findOrFail($id);
         $subject->update($validated);
 
         return redirect()->route('subjects.index')
                         ->with('success', 'Subject updated successfully.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
-        $subject = Teaching::findOrFail($id);
+        $subject = $this->ownSubjects()->findOrFail($id);
         $subject->delete();
 
         return redirect()->route('subjects.index')

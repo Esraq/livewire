@@ -3,116 +3,84 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
-use App\Models\Result;
-
+use Illuminate\Support\Facades\Auth;
 
 class ResultController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * Rules shared by store() and update().
+     */
+    private function rules(): array
+    {
+        return [
+            'degree_name' => 'required|string|max:255',
+            'institution' => 'required|string|max:255',
+            'board'       => 'required|string|max:255',
+            'year'        => 'required|string|max:4',
+        ];
+    }
+
+    /**
+     * Display only the logged-in user's results.
      */
     public function index()
     {
-        $degrees = Result::latest()->paginate(5);
+        $degrees = Auth::user()->results()->latest()->paginate(5);
 
         return view('faculty.result', compact('degrees'))
                     ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         return view('faculty.result');
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * Store a new result for the logged-in user.
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'degree_name' => 'required|string|max:255',
-            'institution' => 'required|string|max:255',
-            'board'       => 'required|string|max:255',
-            'year'        => 'required|string|max:4',
-        ]);
+        $data = $request->validate($this->rules());
 
-        Result::create($request->all());
+        // user_id is set from the logged-in user, never from the request
+        Auth::user()->results()->create($data);
 
         return redirect()->route('results.index')
                         ->with('success', 'Degree added successfully.');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
-        $degrees = Result::findOrFail($id);
+        $degrees = Auth::user()->results()->findOrFail($id);
 
         return view('results.show', compact('degrees'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
-       $editDegree = Result::findOrFail($id);
-       $degrees = Result::latest()->paginate(5);
+        // 404 if the record belongs to someone else
+        $editDegree = Auth::user()->results()->findOrFail($id);
+        $degrees    = Auth::user()->results()->latest()->paginate(5);
 
-       return view('faculty.result', compact('degrees', 'editDegree'))
-                   ->with('i', (request()->input('page', 1) - 1) * 5);
+        return view('faculty.result', compact('degrees', 'editDegree'))
+                    ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'degree_name' => 'required|string|max:255',
-            'institution' => 'required|string|max:255',
-            'board'       => 'required|string|max:255',
-            'year'        => 'required|string|max:4',
-        ]);
+        $data = $request->validate($this->rules());
 
-        $degree = Result::findOrFail($id);
-        $degree->update($request->all());
+        $degree = Auth::user()->results()->findOrFail($id);
+        $degree->update($data);
 
         return redirect()->route('results.index')
                         ->with('success', 'Degree updated successfully.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
-        $degree = Result::findOrFail($id);
+        $degree = Auth::user()->results()->findOrFail($id);
         $degree->delete();
 
         return redirect()->route('results.index')
