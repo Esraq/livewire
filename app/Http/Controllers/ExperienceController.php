@@ -4,17 +4,26 @@ namespace App\Http\Controllers;
 
 use App\Models\Experience;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ExperienceController extends Controller
 {
     /**
-     * Display a listing of the resource (single page with inline add/edit form).
+     * Query limited to the logged-in user's experiences (faculty_id = users.id).
+     */
+    private function ownExperiences()
+    {
+        return Experience::where('faculty_id', Auth::id());
+    }
+
+    /**
+     * Display only the logged-in user's experiences (single page with inline add/edit form).
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $experiences = Experience::orderBy('serial_no')->paginate(10);
+        $experiences = $this->ownExperiences()->orderBy('serial_no')->paginate(10);
 
         return view('experiences.index', compact('experiences'));
     }
@@ -30,7 +39,7 @@ class ExperienceController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store an experience for the logged-in user.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -45,7 +54,10 @@ class ExperienceController extends Controller
             'end_date'         => 'nullable|date|after_or_equal:start_date',
         ]);
 
-        Experience::create($validated);
+        $experience = new Experience($validated);
+        // faculty_id is the logged-in user's id, never taken from the form
+        $experience->faculty_id = Auth::id();
+        $experience->save();
 
         return redirect()
             ->route('experiences.index')
@@ -73,8 +85,9 @@ class ExperienceController extends Controller
      */
     public function edit($id)
     {
-        $editExperience = Experience::findOrFail($id);
-        $experiences = Experience::orderBy('serial_no')->paginate(10);
+        // 404 if the record belongs to someone else
+        $editExperience = $this->ownExperiences()->findOrFail($id);
+        $experiences    = $this->ownExperiences()->orderBy('serial_no')->paginate(10);
 
         return view('experiences.index', compact('experiences', 'editExperience'));
     }
@@ -88,7 +101,7 @@ class ExperienceController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $experience = Experience::findOrFail($id);
+        $experience = $this->ownExperiences()->findOrFail($id);
 
         $validated = $request->validate([
             'serial_no'        => 'required|integer|unique:experiences,serial_no,' . $experience->id,
@@ -113,7 +126,7 @@ class ExperienceController extends Controller
      */
     public function destroy($id)
     {
-        $experience = Experience::findOrFail($id);
+        $experience = $this->ownExperiences()->findOrFail($id);
         $experience->delete();
 
         return redirect()

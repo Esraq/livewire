@@ -2,7 +2,7 @@
 
 
 use App\Http\Controllers\NewsEventController;
-
+use App\Http\Controllers\LatestAlumniController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ExperienceController;
 use Illuminate\Support\Facades\Auth;
@@ -25,6 +25,9 @@ use App\Http\Controllers\ChangePasswordController;
 use App\Http\Controllers\ConvocationController;
 use App\Http\Middleware\IsAdmin;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\PasswordController;
+use App\Http\Controllers\LatestNoticeController;
+use App\Http\Controllers\LatestConvocationController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -35,6 +38,29 @@ use App\Http\Controllers\UserController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('/notice', [LatestNoticeController::class, 'index'])
+    ->name('notice.index');
+
+
+Route::get('/alumnis', [LatestAlumniController::class, 'index'])
+    ->name('alumnis.index');
+
+Route::get('/alumni/{id}', [LatestAlumniController::class, 'show'])
+    ->name('alumnis.show');
+
+
+Route::get('/convocation', [LatestConvocationController::class, 'index'])
+    ->name('convocation');
+
+Route::get('/convocation/{id}', [LatestConvocationController::class, 'show'])
+    ->name('convocation.show');
+
+
+Route::view('/contact-us', 'contact-us')
+    ->name('contact.us');
+
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -584,6 +610,14 @@ Route::resource('experiences', ExperienceController::class);
 Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
 
 Route::post('/profile/image', [ProfileController::class, 'updateImage'])->name('profile.image');
+
+
+Route::get('update-password', [PasswordController::class, 'edit'])
+    ->name('update-password.edit');
+
+Route::put('update-password', [PasswordController::class, 'update'])
+    ->name('update-password.update');
+
  
 });
  

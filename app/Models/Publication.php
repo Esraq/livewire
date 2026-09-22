@@ -12,5 +12,6 @@ class Publication extends Model
     protected $fillable = [
         'serial_no',
         'publication_name',
+        'doi',
     ];
 }

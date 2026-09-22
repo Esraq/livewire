@@ -19,6 +19,7 @@ class Experience extends Model
 
     protected $casts = [
         'serial_no'  => 'integer',
+        'faculty_id'=>'integer',
         'start_date' => 'date',
         'end_date'   => 'date',
     ];

@@ -2,20 +2,40 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 use App\Models\Publication;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PublicationController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Rules shared by store() and update().
+     */
+    private function rules(): array
+    {
+        return [
+            'serial_no'        => 'required|integer',
+            'publication_name' => 'required|string|max:1000',
+            'doi'              => 'nullable|string|max:255',
+        ];
+    }
+
+    /**
+     * Query limited to the logged-in user's publications (faculty_id = users.id).
+     */
+    private function ownPublications()
+    {
+        return Publication::where('faculty_id', Auth::id());
+    }
+
+    /**
+     * Display only the logged-in user's publications.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $publications = Publication::latest()->paginate(5);
+        $publications = $this->ownPublications()->latest()->paginate(5);
 
         return view('faculty.publication', compact('publications'))
                     ->with('i', (request()->input('page', 1) - 1) * 5)
@@ -33,22 +53,23 @@ class PublicationController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a publication for the logged-in user.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'serial_no'        => 'required|integer',
-            'publication_name' => 'required|string|max:1000',
-        ]);
+        $validated = $request->validate($this->rules());
 
-        Publication::create($validated);
+        $publication = new Publication($validated);
+        // faculty_id is the logged-in user's id, never taken from the form
+        $publication->faculty_id = Auth::id();
+        $publication->save();
 
-        return redirect()->route('publications.index')
-                        ->with('success', 'Publication added successfully.');
+        return redirect()
+            ->route('publications.index')
+            ->with('success', 'Publication added successfully.');
     }
 
     /**
@@ -59,7 +80,7 @@ class PublicationController extends Controller
      */
     public function show($id)
     {
-        $publication = Publication::findOrFail($id);
+        $publication = $this->ownPublications()->findOrFail($id);
 
         return view('faculty.show', compact('publication'));
     }
@@ -72,11 +93,18 @@ class PublicationController extends Controller
      */
     public function edit($id)
     {
-        $editPublication = Publication::findOrFail($id);
-        $publications = Publication::latest()->paginate(5);
+        // 404 if the record belongs to someone else
+        $editPublication = $this->ownPublications()->findOrFail($id);
 
-        return view('faculty.publication', compact('publications', 'editPublication'))
-                    ->with('i', (request()->input('page', 1) - 1) * 5);
+        $publications = $this->ownPublications()->latest()->paginate(5);
+
+        return view(
+            'faculty.publication',
+            compact('publications', 'editPublication')
+        )->with(
+            'i',
+            (request()->input('page', 1) - 1) * 5
+        );
     }
 
     /**
@@ -88,16 +116,15 @@ class PublicationController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validated = $request->validate([
-            'serial_no'        => 'required|integer',
-            'publication_name' => 'required|string|max:1000',
-        ]);
+        $validated = $request->validate($this->rules());
 
-        $publication = Publication::findOrFail($id);
+        $publication = $this->ownPublications()->findOrFail($id);
+
         $publication->update($validated);
 
-        return redirect()->route('publications.index')
-                        ->with('success', 'Publication updated successfully.');
+        return redirect()
+            ->route('publications.index')
+            ->with('success', 'Publication updated successfully.');
     }
 
     /**
@@ -108,10 +135,12 @@ class PublicationController extends Controller
      */
     public function destroy($id)
     {
-        $publication = Publication::findOrFail($id);
+        $publication = $this->ownPublications()->findOrFail($id);
+
         $publication->delete();
 
-        return redirect()->route('publications.index')
-                        ->with('success', 'Publication deleted successfully.');
+        return redirect()
+            ->route('publications.index')
+            ->with('success', 'Publication deleted successfully.');
     }
 }

@@ -16,21 +16,24 @@ class ConvocationController extends Controller
         return view('convocations.index', compact('convocations'));
     }
 
-    public function store(Request $request)
-    {
-        $data = $request->validate([
-            'title'       => 'required|string|max:255',
-            'image'       => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
-            'description' => 'nullable|string',
-        ]);
+   public function store(Request $request)
+{
+    $data = $request->validate([
+        'title'       => 'required|string|max:255',
+        'image'       => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
+        'description' => 'nullable|string',
+    ]);
 
-        $data['image'] = $this->uploadImage($request->file('image'));
+    // Store image inside storage/app/public/convocations
+    $data['image'] = $request->file('image')
+        ->store('convocations', 'public');
 
-        Convocation::create($data);
+    Convocation::create($data);
 
-        return redirect()->route('convocations.index')
-            ->with('success', 'Convocation created successfully.');
-    }
+    return redirect()
+        ->route('convocations.index')
+        ->with('success', 'Convocation created successfully.');
+}
 
     public function update(Request $request, Convocation $convocation)
     {

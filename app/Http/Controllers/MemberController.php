@@ -4,17 +4,26 @@ namespace App\Http\Controllers;
 
 use App\Models\Member;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MemberController extends Controller
 {
     /**
-     * Display a listing of the resource (single page with CRUD UI).
+     * Query limited to the logged-in user's memberships (faculty_id = users.id).
+     */
+    private function ownMembers()
+    {
+        return Member::where('faculty_id', Auth::id());
+    }
+
+    /**
+     * Display only the logged-in user's memberships (single page with CRUD UI).
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $members = Member::orderBy('serial_no')->paginate(10);
+        $members = $this->ownMembers()->orderBy('serial_no')->paginate(10);
 
         return view('members.index', compact('members'));
     }
@@ -30,7 +39,7 @@ class MemberController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a membership for the logged-in user.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -42,7 +51,10 @@ class MemberController extends Controller
             'membership_body' => 'required|string|max:255',
         ]);
 
-        Member::create($validated);
+        $member = new Member($validated);
+        // faculty_id is the logged-in user's id, never taken from the form
+        $member->faculty_id = Auth::id();
+        $member->save();
 
         return redirect()
             ->route('members.index')
@@ -70,8 +82,9 @@ class MemberController extends Controller
      */
     public function edit($id)
     {
-        $editMember = Member::findOrFail($id);
-        $members = Member::orderBy('serial_no')->paginate(10);
+        // 404 if the record belongs to someone else
+        $editMember = $this->ownMembers()->findOrFail($id);
+        $members    = $this->ownMembers()->orderBy('serial_no')->paginate(10);
 
         return view('members.index', compact('members', 'editMember'));
     }
@@ -85,7 +98,7 @@ class MemberController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $member = Member::findOrFail($id);
+        $member = $this->ownMembers()->findOrFail($id);
 
         $validated = $request->validate([
             'serial_no'       => 'required|integer|unique:members,serial_no,' . $member->id,
@@ -107,7 +120,7 @@ class MemberController extends Controller
      */
     public function destroy($id)
     {
-        $member = Member::findOrFail($id);
+        $member = $this->ownMembers()->findOrFail($id);
         $member->delete();
 
         return redirect()

@@ -2,20 +2,39 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 use App\Models\Award;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AwardController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Rules shared by store() and update().
+     */
+    private function rules(): array
+    {
+        return [
+            'serial_no'  => 'required|integer',
+            'award_name' => 'required|string|max:255',
+        ];
+    }
+
+    /**
+     * Query limited to the logged-in user's awards (faculty_id = users.id).
+     */
+    private function ownAwards()
+    {
+        return Award::where('faculty_id', Auth::id());
+    }
+
+    /**
+     * Display only the logged-in user's awards.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $awards = Award::latest()->paginate(5);
+        $awards = $this->ownAwards()->latest()->paginate(5);
 
         return view('faculty.award', compact('awards'))
                     ->with('i', (request()->input('page', 1) - 1) * 5)
@@ -33,19 +52,19 @@ class AwardController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store an award for the logged-in user.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'serial_no'  => 'required|integer',
-            'award_name' => 'required|string|max:255',
-        ]);
+        $validated = $request->validate($this->rules());
 
-        Award::create($validated);
+        $award = new Award($validated);
+        // faculty_id is the logged-in user's id, never taken from the form
+        $award->faculty_id = Auth::id();
+        $award->save();
 
         return redirect()->route('awards.index')
                         ->with('success', 'Award added successfully.');
@@ -59,7 +78,7 @@ class AwardController extends Controller
      */
     public function show($id)
     {
-        $award = Award::findOrFail($id);
+        $award = $this->ownAwards()->findOrFail($id);
 
         return view('faculty.show', compact('award'));
     }
@@ -72,8 +91,9 @@ class AwardController extends Controller
      */
     public function edit($id)
     {
-        $editAward = Award::findOrFail($id);
-        $awards = Award::latest()->paginate(5);
+        // 404 if the record belongs to someone else
+        $editAward = $this->ownAwards()->findOrFail($id);
+        $awards    = $this->ownAwards()->latest()->paginate(5);
 
         return view('faculty.award', compact('awards', 'editAward'))
                     ->with('i', (request()->input('page', 1) - 1) * 5);
@@ -88,12 +108,9 @@ class AwardController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validated = $request->validate([
-            'serial_no'  => 'required|integer',
-            'award_name' => 'required|string|max:255',
-        ]);
+        $validated = $request->validate($this->rules());
 
-        $award = Award::findOrFail($id);
+        $award = $this->ownAwards()->findOrFail($id);
         $award->update($validated);
 
         return redirect()->route('awards.index')
@@ -108,7 +125,7 @@ class AwardController extends Controller
      */
     public function destroy($id)
     {
-        $award = Award::findOrFail($id);
+        $award = $this->ownAwards()->findOrFail($id);
         $award->delete();
 
         return redirect()->route('awards.index')

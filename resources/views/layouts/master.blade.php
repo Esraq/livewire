@@ -655,7 +655,7 @@
         <li class="nav-item">
 
             <a class="nav-link"
-               href="#">
+               href="/update-password">
 
                 <i class="fas fa-cog"></i>
 
