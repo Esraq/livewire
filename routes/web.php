@@ -52,9 +52,11 @@ Route::get('/cse/faculty', [CseFacultyController::class, 'index'])
 Route::get('/cse/faculty/{id}', [CseFacultyController::class, 'show'])
     ->name('cse.faculty.profile');
 
+Route::view('/undergraduate-programmes', 'undergraduate-programmes')
+    ->name('programmes.undergraduate');
 
-
-
+Route::view('/postgraduate-programmes', 'postgraduate-programmes')
+    ->name('programmes.postgraduate');
 
 Route::get('/notice', [LatestNoticeController::class, 'index'])
     ->name('notice.index');

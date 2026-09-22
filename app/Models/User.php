@@ -60,8 +60,38 @@ class User extends Authenticatable
         return $this->hasMany(Result::class);
     }
 
+   public function trains(): HasMany
+{
+    return $this->hasMany(Train::class, 'faculty_id', 'id');
+}
+
     public function getImageUrlAttribute(): ?string
     {
         return $this->image ? asset($this->image) : null;
     }
+    
+   
+  public function teachings(): HasMany
+{
+    return $this->hasMany(Teaching::class, 'faculty_id', 'id');
+}
+
+public function research(): HasMany
+{
+    return $this->hasMany(Research::class, 'faculty_id', 'id');
+}
+
+public function publications(): HasMany
+{
+    return $this->hasMany(Publication::class, 'faculty_id', 'id');
+}
+
+public function awards(): HasMany
+{
+    return $this->hasMany(Award::class, 'faculty_id', 'id');
+}
+public function experiences(): HasMany
+{
+    return $this->hasMany(Experience::class, 'faculty_id', 'id');
+}
 }

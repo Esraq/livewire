@@ -14,4 +14,9 @@ class Publication extends Model
         'publication_name',
         'doi',
     ];
+
+     public function faculty(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'faculty_id', 'id');
+    }
 }

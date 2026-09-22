@@ -10,4 +10,9 @@ class Train extends Model
     use HasFactory;
 
     protected $fillable = ['serial_no', 'training_name'];
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 }

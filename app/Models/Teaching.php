@@ -13,4 +13,9 @@ class Teaching extends Model
         'serial_no',
         'subject_name',
     ];
+
+      public function faculty(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'faculty_id', 'id');
+    }
 }

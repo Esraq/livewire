@@ -22,4 +22,9 @@ class Experience extends Model
         'start_date' => 'date',
         'end_date'   => 'date',
     ];
+
+     public function faculty(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'faculty_id', 'id');
+    }
 }

@@ -444,20 +444,20 @@
                 </div>
                 <div>
                   <h3>Programmes</h3>
-                  <a href="{{ url('/#programmes') }}">Undergraduate</a>
-                  <a href="{{ url('/#programmes') }}">Graduate</a>
-                  <a href="{{ url('/#programmes') }}">Post Graduate Diploma</a>
+                  <a href="{{ url('/undergraduate-programmes') }}">Undergraduate</a>
+                  <a href="{{ url('/postgraduate-programmes') }}">Graduate</a>
+                 
                 </div>
                 <div>
                   <h3>Quality &amp; Institute</h3>
-                  <a href="{{ url('/#research') }}">Institutional Quality Assurance Cell (IQAC)</a>
-                  <a href="{{ url('/#learning') }}">Skill Development</a>
+                  <a href="{{ url('/iqac') }}">Institutional Quality Assurance Cell (IQAC)</a>
+                  <a href="{{ url('/Khwaja Enayetpuri Sufism and Skill Development Institute') }}">Skill Development</a>
                 </div>
                 <div>
                   <h3>Information</h3>
-                  <a href="{{ url('/#programmes') }}">Academic Policy</a>
-                  <a href="{{ url('/#notices') }}">Academic Calendar</a>
-                  <a href="{{ url('/#notices') }}">Academic Notices</a>
+                  <a href="{{ url('/academic_policy') }}">Academic Policy</a>
+                  <a href="{{ url('/academic_calender') }}">Academic Calendar</a>
+                  
                 </div>
               </div>
             </li>
@@ -467,23 +467,23 @@
               <div class="mega-menu">
                 <div>
                   <h3>Information</h3>
-                  <a href="{{ url('/#admission') }}">Admission Overview</a>
-                  <a href="{{ url('/#programmes') }}">Undergraduate Admission</a>
-                  <a href="{{ url('/#programmes') }}">Graduate Admission</a>
-                  <a href="{{ url('/#programmes') }}">Post Graduate Diploma</a>
+                  <a href="{{ url('/admission_information') }}">Admission Overview</a>
+                  <a href="{{ url('/admission-checklist') }}">Undergraduate Admission</a>
+                  <a href="{{ url('/admission-checklist') }}">Graduate Admission</a>
+                  <a href="{{ url('/admission-checklist') }}">Post Graduate Diploma</a>
                 </div>
                 <div>
                   <h3>Guidelines</h3>
-                  <a href="{{ url('/#admission') }}">How to Apply</a>
-                  <a href="{{ url('/#admission') }}">Admission Process</a>
-                  <a href="{{ url('/#admission') }}">Required Documents</a>
-                  <a href="{{ url('/#admission') }}">Credit Transfer</a>
+                  <a href="{{ url('/admission_requirement') }}">How to Apply</a>
+                  <a href="{{ url('/admission_process') }}">Admission Process</a>
+                  <a href="{{ url('/admission_eligibility') }}">Required Documents</a>
+                  <a href="{{ url('/credit_transfer') }}">Credit Transfer</a>
                 </div>
                 <div>
                   <h3>Fees &amp; Support</h3>
-                  <a href="{{ url('/#admission') }}">Tuition Information</a>
-                  <a href="{{ url('/#admission') }}">Waiver &amp; Scholarship</a>
-                  <a href="{{ url('/#contact') }}">Admission Help Desk</a>
+                  <a href="{{ url('/tution_fees') }}">Tuition Information</a>
+                  <a href="{{ url('/tuition-fee-waiver') }}">Waiver &amp; Scholarship</a>
+                  <a href="{{ url('/payment-guideline') }}">Admission Help Desk</a>
                 </div>
               </div>
             </li>
@@ -493,22 +493,22 @@
               <div class="mega-menu">
                 <div>
                   <h3>Research Overview</h3>
-                  <a href="{{ url('/#research') }}">Research Activities</a>
-                  <a href="{{ url('/#research') }}">Research Groups</a>
-                  <a href="{{ url('/#research') }}">Research Seminars</a>
-                  <a href="{{ url('/#research') }}">Research Facilitation</a>
+                  <a href="{{ url('/research_division') }}">Research Divisions</a>
+                  <a href="{{ url('/research_group') }}">Research Groups</a>
+                  <a href="{{ url('/research-project') }}">Research Project</a>
+                  <a href="{{ url('/research_facilation') }}">Research Facilitation</a>
                 </div>
                 <div>
                   <h3>Publications</h3>
                   <a href="https://journal.kyau.edu.bd/" target="_blank" rel="noopener">KYAU Journal</a>
-                  <a href="{{ url('/#research') }}">Faculty Research</a>
-                  <a href="{{ url('/#news') }}">Conference Updates</a>
+                  <a href="{{ url('/scopus_journal') }}">Faculty Research</a>
+                  <a href="{{ url('/research_facilation') }}">Research Facilation</a>
                 </div>
                 <div>
                   <h3>Research Network</h3>
-                  <a href="{{ url('/#research') }}">Collaboration</a>
-                  <a href="{{ url('/#research') }}">Laboratories</a>
-                  <a href="{{ url('/#research') }}">Innovation</a>
+                  <a href="{{ url('/research-collaboration') }}">Collaboration</a>
+                  <a href="{{ url('/research-lab') }}">Laboratories</a>
+                  <a href="{{ url('/source-of-funding') }}">Funding</a>
                 </div>
               </div>
             </li>
@@ -518,17 +518,17 @@
               <div class="mega-menu">
                 <div>
                   <h3>Facilities</h3>
-                  <a href="{{ url('/#campus') }}">Classrooms</a>
-                  <a href="{{ url('/#campus') }}">Laboratories</a>
-                  <a href="{{ url('/#campus') }}">Library</a>
-                  <a href="{{ url('/#campus') }}">Medical Centre</a>
-                  <a href="{{ url('/#campus') }}">Transport</a>
+                  <a href="{{ url('/cafeteria') }}">Cafeteria</a>
+                  <a href="{{ url('/library') }}">Library</a>
+                  <a href="{{ url('/transport') }}">Transport</a>
+                  <a href="{{ url('/medical_center') }}">Medical Centre</a>
+                  <a href="{{ url('/prayer_room') }}">Prayer Room</a>
                 </div>
                 <div>
                   <h3>Clubs &amp; Activities</h3>
-                  <a href="{{ url('/#campus') }}">Cultural Club</a>
+                  <a href="{{ url('/culture') }}">Cultural Club</a>
                   <a href="{{ url('/#campus') }}">Blood Donation Club</a>
-                  <a href="{{ url('/#campus') }}">Sports Club</a>
+                  <a href="{{ url('/sports') }}">Sports Club</a>
                   <a href="{{ url('/#campus') }}">Debating Club</a>
                 </div>
                 <div>
@@ -540,8 +540,8 @@
               </div>
             </li>
 
-            <li class="nav-item"><a href="{{ url('/#career') }}">Career</a></li>
-            <li class="nav-item"><a href="{{ url('/#news') }}">News &amp; Events</a></li>
+            <li class="nav-item"><a href="{{ url('/career') }}">Career</a></li>
+            <li class="nav-item"><a href="{{ url('/news') }}">News &amp; Events</a></li>
 
             <li class="nav-item nav-item--cta">
               <a class="admission-btn" href="{{ url('/#admission') }}">Apply Now</a>

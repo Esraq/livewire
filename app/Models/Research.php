@@ -13,4 +13,9 @@ class Research extends Model
         'serial_no',
         'research_interest',
     ];
+
+    public function faculty(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'faculty_id', 'id');
+    }
 }
