@@ -409,25 +409,25 @@
               <div class="mega-menu">
                 <div>
                   <h3>Governing Bodies</h3>
-                  <a href="{{ url('/#about') }}">Board of Trustees</a>
-                  <a href="{{ url('/#about') }}">Syndicate</a>
-                  <a href="{{ url('/#about') }}">Academic Council</a>
+                  <a href="{{ url('/board-of-trustees') }}">Board of Trustees</a>
+                  <a href="{{ url('/syndicate') }}">Syndicate</a>
+                  <a href="{{ url('/academic-council') }}">Academic Council</a>
                 </div>
                 <div>
                   <h3>Leadership</h3>
-                  <a href="{{ url('/#about') }}">Chancellor</a>
-                  <a href="{{ url('/#about') }}">Chairman, BoT</a>
-                  <a href="{{ url('/#about') }}">Vice Chancellor</a>
-                  <a href="{{ url('/#about') }}">Treasurer</a>
-                  <a href="{{ url('/#about') }}">Registrar</a>
+                  <a href="{{ url('/chancellor') }}">Chancellor</a>
+                  <a href="{{ url('/chairman') }}">Chairman, BoT</a>
+                  <a href="{{ url('/vc') }}">Vice Chancellor</a>
+                  <a href="{{ url('/tressurer') }}">Treasurer</a>
+                  <a href="{{ url('/registrar') }}">Registrar</a>
                 </div>
                 <div>
                   <h3>Offices</h3>
-                  <a href="{{ url('/#contact') }}">Controller of Examinations</a>
-                  <a href="{{ url('/#contact') }}">Registrar</a>
-                  <a href="{{ url('/#contact') }}">Proctor</a>
-                  <a href="{{ url('/#contact') }}">Information Technology</a>
-                  <a href="{{ url('/#contact') }}">Admission Office</a>
+                  <a href="{{ url('/controller_of_examinations') }}">Controller of Examinations</a>
+                  <a href="{{ url('/registrar_office') }}">Registrar</a>
+                  <a href="{{ url('/proctor') }}">Proctor</a>
+                  <a href="{{ url('/information_technology') }}">Information Technology</a>
+                  <a href="{{ url('/contact-us') }}">Admission Office</a>
                 </div>
               </div>
             </li>
@@ -437,11 +437,10 @@
               <div class="mega-menu">
                 <div>
                   <h3>Faculties</h3>
-                  <a href="{{ url('/#faculties') }}">Science &amp; Engineering</a>
-                  <a href="{{ url('/#faculties') }}">Business</a>
-                  <a href="{{ url('/#faculties') }}">Biomedical Science</a>
-                  <a href="{{ url('/#faculties') }}">Law</a>
-                  <a href="{{ url('/#faculties') }}">Human Science</a>
+                  <a href="{{ url('/school-of-business-and-social-science') }}">School of Business And Social Science</a>
+                  <a href="{{ url('/school-biomedical-life-science') }}">School of Bio Medical And Life Science</a>
+                  <a href="{{ url('/school_of_science_and_engineering') }}">School of Science And Engineering</a>
+                  
                 </div>
                 <div>
                   <h3>Programmes</h3>

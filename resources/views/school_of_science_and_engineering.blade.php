@@ -677,44 +677,6 @@ real-world industry applications.
 <!-- Department Wise Faculty List -->
 
 
-<h2 class="page-title" style="margin-top:60px;">
-
-Department Wise Faculty List
-
-</h2>
-
-
-
-<div class="orange-line"></div>
-
-
-
-
-<div class="faculty-link-grid">
-
-
-<a href="/cse_faculty" class="faculty-link-card">
-Computer Science & Engineering
-</a>
-
-
-<a href="#" class="faculty-link-card">
-Electrical & Electronic Engineering
-</a>
-
-
-<a href="#" class="faculty-link-card">
-Mechatronics Engineering
-</a>
-
-
-<a href="#" class="faculty-link-card">
-Information & Communication Technology
-</a>
-
-
-</div>
-
 
 
 <!-- Course Catalogue -->

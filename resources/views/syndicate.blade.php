@@ -1,570 +1,204 @@
 @extends('layouts.app')
 
+@section('title', 'Syndicate | Khwaja Yunus Ali University')
+
 @section('content')
 
 <style>
 
-.ac-section{
-    padding:40px 0;
-    background:#fff;
-}
-
-
-.page-title{
-
-    text-align:center;
-    font-size:18px;
-    font-weight:600;
-    text-transform:uppercase;
-    color:#222;
-    margin-bottom:8px;
-
-}
-
-
-.title-line{
-
-    height:1px;
-    width:100%;
-    background:#e8552e;
-    margin-bottom:8px;
-
-}
-
-
-.table-container{
-
-    width:100%;
-    overflow-x:auto;
-
-}
-
-
-.ac-table{
-
-    width:100%;
-    border-collapse:collapse;
-    font-size:13px;
-}
-
-
-.ac-table th{
-
-    border:1px solid #d6dce0;
-    padding:8px;
-    background:#fff;
-    text-align:left;
-    font-weight:600;
-
-}
-
-
-
-.ac-table td{
-
-    border:1px solid #d6dce0;
-    padding:8px;
-    vertical-align:middle;
-
-}
-
-
-
-.ac-table tbody tr:nth-child(odd){
-
-    background:#f1f1f1;
-
-}
-
-
-.ac-table tbody tr:nth-child(even){
-
-    background:#fff;
-
-}
-
-
-
-.ac-table img{
-
-    width:55px;
-    height:55px;
-    object-fit:cover;
-    border-radius:50%;
-
-}
-
-
-
-.member-name{
-
-    font-weight:600;
-    color:#222;
-    display:block;
-
-}
-
-
-.member-details{
-
-    color:#555;
-    font-size:12px;
-    margin-top:4px;
-
-}
-
-
-
-.position{
-
-    font-weight:500;
-    color:#222;
-
-}
-
-
-.note{
-
-    display:block;
-    color:#555;
-    font-size:12px;
-    margin-top:4px;
-
-}
-
-
-
-@media(max-width:768px){
-
-    .ac-table{
-
-        min-width:900px;
-
+    .syndicate-section {
+        padding: 40px 0;
+        background: #fff;
     }
 
-}
+    .syndicate-title {
+        text-align: center;
+        font-size: 18px;
+        font-weight: 600;
+        color: #222;
+        text-transform: uppercase;
+        margin-bottom: 8px;
+    }
 
+    .syndicate-line {
+        height: 1px;
+        background: #e8552e;
+        width: 100%;
+        margin-bottom: 15px;
+    }
+
+    .syndicate-table-wrapper {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .syndicate-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 13px;
+        background: #fff;
+    }
+
+    .syndicate-table th {
+        background: #fff;
+        border: 1px solid #d8d8d8;
+        padding: 10px;
+        text-align: left;
+        font-weight: 600;
+        vertical-align: middle;
+    }
+
+    .syndicate-table td {
+        border: 1px solid #d8d8d8;
+        padding: 10px;
+        color: #333;
+        vertical-align: middle;
+    }
+
+    .syndicate-table tbody tr:nth-child(odd) {
+        background: #f2f2f2;
+    }
+
+    .syndicate-table tbody tr:nth-child(even) {
+        background: #fff;
+    }
+
+    .syndicate-table tbody tr:hover {
+        background: #eef8f3;
+    }
+
+    .syndicate-photo {
+        width: 65px;
+        height: 65px;
+        border-radius: 50%;
+        object-fit: cover;
+        display: block;
+    }
+
+    .syndicate-name {
+        font-weight: 600;
+    }
+
+    .no-data {
+        text-align: center;
+        padding: 30px !important;
+        color: #777;
+    }
+
+    @media (max-width: 768px) {
+
+        .syndicate-section {
+            padding: 30px 10px;
+        }
+
+        .syndicate-table {
+            min-width: 700px;
+        }
+
+        .syndicate-table th,
+        .syndicate-table td {
+            padding: 8px;
+        }
+
+        .syndicate-photo {
+            width: 55px;
+            height: 55px;
+        }
+
+    }
 
 </style>
 
 
+<section class="syndicate-section">
 
-<section class="ac-section">
+    <div class="container">
 
+        <h1 class="syndicate-title">
+            Syndicate
+        </h1>
 
-<div class="container">
+        <div class="syndicate-line"></div>
 
+        <div class="syndicate-table-wrapper">
 
-<h1 class="page-title">
-Academic Council
-</h1>
+            <table class="syndicate-table">
 
+                <thead>
 
-<div class="title-line"></div>
+                    <tr>
 
+                        <th style="width: 7%;">
+                            SL
+                        </th>
 
+                        <th style="width: 15%;">
+                            Photo
+                        </th>
 
-<div class="table-container">
+                        <th>
+                            Name
+                        </th>
 
+                        <th style="width: 30%;">
+                            Position
+                        </th>
 
-<table class="ac-table">
+                    </tr>
 
+                </thead>
 
-<thead>
+                <tbody>
 
-<tr>
+                    @forelse($syndicates as $syndicate)
 
-<th width="3%">
-SL
-</th>
+                        <tr>
 
-<th width="12%">
-Photo
-</th>
+                            <td>
+                                {{ $loop->iteration }}
+                            </td>
 
-<th width="40%">
-Name
-</th>
+                            <td>
 
-<th>
-Position
-</th>
+                                <img
+                                    src="{{ $syndicate->image_url }}"
+                                    alt="{{ $syndicate->name }}"
+                                    class="syndicate-photo"
+                                >
 
-</tr>
+                            </td>
 
-</thead>
+                            <td class="syndicate-name">
+                                {{ $syndicate->name }}
+                            </td>
 
+                            <td>
+                                {{ $syndicate->position }}
+                            </td>
 
+                        </tr>
 
-<tbody>
+                    @empty
 
+                        <tr>
 
-<tr>
+                            <td colspan="4" class="no-data">
+                                No Syndicate information found.
+                            </td>
 
-<td>1</td>
+                        </tr>
 
-<td>
-<img src="{{asset('images/council/md-asraf-ali.jpg')}}">
-</td>
+                    @endforelse
 
-<td>
+                </tbody>
 
-<span class="member-name">
-Professor Dr. Md. Asraf Ali
-</span>
+            </table>
 
-<span class="member-details">
-Vice Chancellor, Khwaja Yunus Ali University
-</span>
+        </div>
 
-</td>
-
-<td>
-
-<span class="position">
-Chairman
-</span>
-
-<span class="note">
-(.)
-</span>
-
-</td>
-
-</tr>
-
-
-
-
-<tr>
-
-<td>2</td>
-
-<td>
-<img src="{{asset('images/council/mohammad-yusuf.jpg')}}">
-</td>
-
-<td>
-
-<span class="member-name">
-Mr. Mohammad Yusuf
-</span>
-
-<span class="member-details">
-Chairman, Board of Trustees
-</span>
-
-</td>
-
-<td>
-
-<span class="position">
-Member
-</span>
-
-<span class="note">
-(Nominated by Board of Trustees)
-</span>
-
-</td>
-
-</tr>
-
-
-
-
-
-<tr>
-
-<td>3</td>
-
-<td>
-<img src="{{asset('images/council/husne-ara.jpg')}}">
-</td>
-
-<td>
-
-<span class="member-name">
-Mrs. Husne Ara Hussain
-</span>
-
-<span class="member-details">
-Member, Board of Trustees
-</span>
-
-</td>
-
-
-<td>
-
-<span class="position">
-Member
-</span>
-
-<span class="note">
-(Nominated by Board of Trustees)
-</span>
-
-</td>
-
-</tr>
-
-
-
-
-
-<tr>
-
-<td>4</td>
-
-<td>
-<img src="{{asset('images/council/yunus-khan.jpg')}}">
-</td>
-
-
-<td>
-
-<span class="member-name">
-Mr. Mohammed Yunus Khan
-</span>
-
-<span class="member-details">
-Member, Board of Trustees
-</span>
-
-</td>
-
-
-<td>
-
-<span class="position">
-Member
-</span>
-
-<span class="note">
-(Nominated by Board of Trustees)
-</span>
-
-</td>
-
-</tr>
-
-
-
-
-
-<tr>
-
-<td>5</td>
-
-<td>
-<img src="{{asset('images/council/suman-kanti.jpg')}}">
-</td>
-
-
-<td>
-
-<span class="member-name">
-Professor Dr. Suman Kanti Barua
-</span>
-
-<span class="member-details">
-Pro-Vice Chancellor, Rabindra University Bangladesh
-</span>
-
-</td>
-
-
-<td>
-
-<span class="position">
-Member
-</span>
-
-<span class="note">
-(Nominated by UGC)
-</span>
-
-</td>
-
-</tr>
-
-
-
-
-
-<tr>
-
-<td>6</td>
-
-<td>
-<img src="{{asset('images/council/mostofa.jpg')}}">
-</td>
-
-
-<td>
-
-<span class="member-name">
-Prof. Dr. Mostofa Mahmud Hasan
-</span>
-
-<span class="member-details">
-Dean, School of Business
-</span>
-
-</td>
-
-
-<td>
-
-<span class="position">
-Member
-</span>
-
-<span class="note">
-(Nominated By Vice Chancellor as the Dean)
-</span>
-
-</td>
-
-</tr>
-
-
-
-
-
-<tr>
-
-<td>7</td>
-
-<td>
-<img src="{{asset('images/council/fazle.jpg')}}">
-</td>
-
-
-<td>
-
-<span class="member-name">
-Prof. Dr. Fazle Rabbi Shakil Ahmed
-</span>
-
-<span class="member-details">
-Professor & Dean Faculty of Bio Medical Science
-</span>
-
-</td>
-
-
-<td>
-
-<span class="position">
-Member
-</span>
-
-<span class="note">
-(Nominated by Vice Chancellor as member of Academic Council)
-</span>
-
-</td>
-
-</tr>
-
-
-
-
-
-<tr>
-
-<td>8</td>
-
-<td>
-<img src="{{asset('images/council/shafi.jpg')}}">
-</td>
-
-
-<td>
-
-<span class="member-name">
-Prof. Mohammad Shahed Akond
-</span>
-
-<span class="member-details">
-Professor & Dean Faculty of Science & Engineering
-</span>
-
-</td>
-
-
-<td>
-
-<span class="position">
-Member
-</span>
-
-<span class="note">
-(Nominated by Vice Chancellor as Head of Department)
-</span>
-
-</td>
-
-</tr>
-
-
-
-
-
-<tr>
-
-<td>9</td>
-
-<td>
-<img src="{{asset('images/council/mizanur.jpg')}}">
-</td>
-
-
-<td>
-
-<span class="member-name">
-Md. Mizanur Rahman
-</span>
-
-<span class="member-details">
-Registrar (In Charge)
-</span>
-
-</td>
-
-
-<td>
-
-<span class="position">
-Member Secretary
-</span>
-
-<span class="note">
-(.)
-</span>
-
-</td>
-
-</tr>
-
-
-
-</tbody>
-
-
-</table>
-
-
-</div>
-
-
-
-</div>
-
+    </div>
 
 </section>
-
 
 @endsection

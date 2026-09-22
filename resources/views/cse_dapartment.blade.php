@@ -350,10 +350,8 @@ Testing
 
 Message | 
 
-<a href="/cse_faculty" style="color:#1a73e8;text-decoration:none;">
-
-Faculty List
-
+<a href="{{ route('cse.faculty') }}">
+ Faculty List
 </a>
 
 </h2>

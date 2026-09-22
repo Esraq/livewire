@@ -1,6 +1,6 @@
 <?php
 
-
+use App\Http\Controllers\BoardOfTrusteesController;
 use App\Http\Controllers\NewsEventController;
 use App\Http\Controllers\LatestAlumniController;
 use App\Http\Controllers\HomeController;
@@ -28,6 +28,9 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\LatestNoticeController;
 use App\Http\Controllers\LatestConvocationController;
+use App\Http\Controllers\LatestAcademicCouncilController;
+use App\Http\Controllers\LatestSyndicateController;
+use App\Http\Controllers\CseFacultyController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -39,9 +42,28 @@ use App\Http\Controllers\LatestConvocationController;
 |
 */
 
+
+
+
+
+Route::get('/cse/faculty', [CseFacultyController::class, 'index'])
+    ->name('cse.faculty');
+
+Route::get('/cse/faculty/{id}', [CseFacultyController::class, 'show'])
+    ->name('cse.faculty.profile');
+
+
+
+
+
 Route::get('/notice', [LatestNoticeController::class, 'index'])
     ->name('notice.index');
 
+////Route::get('/cse/faculty', [CseFacultyController::class, 'index'])
+    ////->name('cse.faculty');
+
+Route::view('/school-biomedical-life-science', 'school-biomedical-life-science')
+    ->name('school-biomedical-life-science');    
 
 Route::get('/alumnis', [LatestAlumniController::class, 'index'])
     ->name('alumnis.index');
@@ -57,9 +79,19 @@ Route::get('/convocation/{id}', [LatestConvocationController::class, 'show'])
     ->name('convocation.show');
 
 
+
+Route::get('/academic-council', [LatestAcademicCouncilController::class, 'index'])
+    ->name('academic-council');
+
+Route::get('/syndicate', [LatestSyndicateController::class, 'index'])
+    ->name('syndicate');
+
+
 Route::view('/contact-us', 'contact-us')
     ->name('contact.us');
 
+Route::view('/school-of-business-and-social-science', 'school-business-social-science')
+    ->name('school.business.social.science');
 
 
 Route::get('/', function () {
@@ -107,29 +139,13 @@ Route::get('resources',function()
 });
 
 
-Route::get('board-of-trustees',function()
-{
-
-   return view('bot');
-
-});
+Route::get('/board-of-trustees', [BoardOfTrusteesController::class, 'index'])
+    ->name('board.of.trustees');
 
 
-Route::get('syndicate',function()
-{
-
-   return view('syndicate');
-
-});
 
 
-Route::get('academic_council',function()
 
-{
-
-   return view('academic_council');
-
-}); 
 
 Route::get('chancellor',function()
 
